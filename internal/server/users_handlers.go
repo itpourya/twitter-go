@@ -2,19 +2,21 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
+	"twitter-go-api/internal/database"
+	"twitter-go-api/internal/entity"
+	jwt2 "twitter-go-api/internal/pkg/jwt"
+	"twitter-go-api/internal/repository"
+	"twitter-go-api/internal/serilizers"
+	"twitter-go-api/internal/service"
 )
 
-func (s *Server) HelloWorldHandler(c *gin.Context) {
-	resp := make(map[string]string)
-	resp["message"] = "Hello World"
-
-	c.JSON(http.StatusOK, resp)
-}
-
-func (s *Server) healthHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, s.db.Health())
-}
+var (
+	DB             *gorm.DB                  = database.New()
+	authRepository repository.AuthRepository = repository.NewAuthRepository(DB)
+	authService    service.AuthService       = service.NewAuthService(authRepository)
+)
 
 func (s *Server) getUserProfile(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
@@ -59,13 +61,51 @@ func (s *Server) UnfollowUser(ctx *gin.Context) {
 }
 
 func (s *Server) SignupUser(ctx *gin.Context) {
+	var signupRequest serilizers.RegisterRequest
+
+	err := ctx.ShouldBind(&signupRequest)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	authService, err := authService.AddUserService(signupRequest)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": "signup user",
+		"message": authService,
 	})
+
 }
 
 func (s *Server) LoginUser(ctx *gin.Context) {
+	var loginRequest serilizers.LoginRequest
+	var user entity.User
+	err := ctx.ShouldBind(&loginRequest)
+	if err != nil {
+		return
+	}
+
+	_, err = authService.VerifyLogin(loginRequest.Email, loginRequest.Password)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	user.Email = loginRequest.Email
+	jwt := jwt2.Jwt{}
+	token, _ := jwt.CreateToken(user)
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": "login user",
+		"token": token,
 	})
 }

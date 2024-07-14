@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 	"time"
@@ -14,7 +15,7 @@ import (
 type Server struct {
 	port int
 
-	db database.Service
+	db *gorm.DB
 }
 
 func NewServer() *http.Server {
