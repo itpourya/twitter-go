@@ -30,6 +30,7 @@ func (a authService) AddUserService(request serilizers.RegisterRequest) (string,
 	user.Password = request.Password
 	user.Lastname = request.Lastname
 	user.Email = request.Email
+	user.Username = request.Username
 	user.IsActive = true
 
 	status, err := a.authRepository.AddUser(user)
