@@ -24,7 +24,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 		users.DELETE("/:userId/followers/:follower_userId", s.UnfollowUser)
 		users.GET("/:userId/followings", s.getUserFollowings)
 		users.POST("/:userId/followings", s.FollowUser)
-		users.DELETE("/:userId/followings/:followingUserId", s.UnfollowUser)
+		users.DELETE("/:userId/followings/:followingUserId", s.removeFromFollowers)
 	}
 
 	auth := r.Group("/api/v1")
