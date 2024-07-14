@@ -8,7 +8,7 @@ import (
 
 func AthorizationJWT(jwtService jwt.TokenService) gin.HandlerFunc {
 	return func(context *gin.Context) {
-		authToken := context.GetHeader("Athorization")
+		authToken := context.GetHeader("Authorization")
 		if authToken == "" {
 			//context.JSON(http.StatusBadRequest, gin.H{"error": "Missing token", "status": false})
 			context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing token", "status": false})
