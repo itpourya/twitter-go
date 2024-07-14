@@ -5,18 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/entity/userEntiry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/middleware/jwt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/pkg/jwt/jwt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/authRepository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/serilizers/authSerializers.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/service/authService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/entity/postEntity.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/postRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/userRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/service/postService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/entity/userEntiry.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/entity/userEntity.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middleware/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/serilizers/authSerializers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serilizers/authSerializers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/posts_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/posts_handlers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/server/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/users_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/users_handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/authService.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +38,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/internal/database/database.go" root0="SKIP_INSPECTION" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2jCvcvwmJWdMMo4aEAM2OlB4yK4" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -48,23 +49,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "main",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/home/pourya/Desktop/project/twitter-go",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pourya/Desktop/project/twitter-go&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
