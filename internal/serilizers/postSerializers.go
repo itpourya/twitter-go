@@ -6,6 +6,11 @@ type CreatePostRequest struct {
 	Content string `json:"content" form:"content" binding:"required,min=1"`
 }
 
+type UpdatePostRequest struct {
+	PostID  int    `json:"postId" form:"postId" binding:"required,min=1"`
+	Content string `json:"content" form:"content" binding:"required,min=1"`
+}
+
 type PostResponse struct {
 	ID        int              `json:"id" form:"id" binding:"required,min=1"`
 	Content   string           `json:"content" form:"content" binding:"required,min=1"`
