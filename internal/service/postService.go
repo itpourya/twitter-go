@@ -8,10 +8,10 @@ import (
 )
 
 type PostService interface {
-	CreatePost(request serilizers.CreatePostRequest, email string) error
-	GetListPost(userID int) ([]entity.Post, error)
+	CreatePost(request serilizers.CreatePostRequest, username string) error
+	GetListPost(username string) ([]entity.Post, error)
 	GetDetailPost(username string, postID int) (entity.Post, error)
-	DeletePost(postID int) error
+	DeletePost(postID int, username string) error
 	UpdatePost(post entity.Post) error
 }
 
@@ -19,13 +19,13 @@ type postService struct {
 	postRepository repository.PostRepository
 }
 
-func (p postService) CreatePost(request serilizers.CreatePostRequest, email string) error {
+func (p postService) CreatePost(request serilizers.CreatePostRequest, username string) error {
 	var post entity.Post
 	if request.Content == "" {
 		return errors.New("empty")
 	}
 
-	post.AuthorEmail = email
+	post.AuthorUsername = username
 	post.Content = request.Content
 
 	err := p.postRepository.CreatePost(post)
@@ -36,9 +36,13 @@ func (p postService) CreatePost(request serilizers.CreatePostRequest, email stri
 	return nil
 }
 
-func (p postService) GetListPost(userID int) ([]entity.Post, error) {
-	//TODO implement me
-	panic("implement me")
+func (p postService) GetListPost(username string) ([]entity.Post, error) {
+	posts, err := p.postRepository.ListUserPosts(username)
+	if err != nil {
+		return nil, err
+	}
+
+	return posts, nil
 }
 
 func (p postService) GetDetailPost(username string, postID int) (entity.Post, error) {
@@ -50,9 +54,13 @@ func (p postService) GetDetailPost(username string, postID int) (entity.Post, er
 	return post, nil
 }
 
-func (p postService) DeletePost(postID int) error {
-	//TODO implement me
-	panic("implement me")
+func (p postService) DeletePost(postID int, username string) error {
+	ok := p.postRepository.DeletePost(postID, username)
+	if ok != nil {
+		return ok
+	}
+
+	return nil
 }
 
 func (p postService) UpdatePost(post entity.Post) error {
