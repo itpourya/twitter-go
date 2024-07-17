@@ -39,7 +39,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 		posts.GET("/:username/:postId", s.detailUserPosts) // DONE
 		posts.POST("/create-post", s.createUserPost)       // DONE
 		posts.DELETE("/:postId", s.removeUserPost)         // DONE
-		posts.PUT("/update", s.updateUserPost)
+		posts.PUT("/update", s.updateUserPost)             // DONE
 	}
 
 	return r
