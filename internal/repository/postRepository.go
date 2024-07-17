@@ -4,6 +4,7 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"twitter-go-api/internal/entity"
+	"twitter-go-api/internal/serilizers"
 )
 
 type PostRepository interface {
@@ -11,7 +12,7 @@ type PostRepository interface {
 	GetDetailPost(username string, postID int) (entity.Post, error)
 	CreatePost(post entity.Post) error
 	DeletePost(postID int, username string) error
-	UpdatePost(post entity.Post) error
+	UpdatePost(postDetail serilizers.UpdatePostRequest, username string) error
 }
 
 type postRepository struct {
@@ -62,9 +63,15 @@ func (p postRepository) DeletePost(postID int, username string) error {
 	return nil
 }
 
-func (p postRepository) UpdatePost(post entity.Post) error {
-	//TODO implement me
-	panic("implement me")
+func (p postRepository) UpdatePost(postDetail serilizers.UpdatePostRequest, username string) error {
+	var post entity.Post
+
+	query := p.session.Model(&post).Where("id = ? AND author_username = ?", postDetail.PostID, username).Update("content", postDetail.Content)
+	if query.Error != nil {
+		return errors.New("post not found")
+	}
+
+	return nil
 }
 
 func NewPostRepository(session *gorm.DB) PostRepository {
