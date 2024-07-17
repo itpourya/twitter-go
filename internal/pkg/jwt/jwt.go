@@ -31,17 +31,18 @@ func (j Jwt) CreateToken(user entity.User) (serilizers.Token, error) {
 
 	claims := jwt.MapClaims{}
 	claims["user_id"] = user.Email
+	claims["user_username"] = user.Username
 	claims["exp"] = time.Now().Add(time.Hour * 2).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	jwt := serilizers.Token{}
+	jwtSerializer := serilizers.Token{}
 
-	jwt.AccessToken, err = token.SignedString([]byte(os.Getenv("SECRET_KEY")))
+	jwtSerializer.AccessToken, err = token.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	if err != nil {
-		return jwt, err
+		return jwtSerializer, err
 	}
 
-	return j.createRefreshToken(jwt)
+	return j.createRefreshToken(jwtSerializer)
 }
 
 func (Jwt) ValidateToken(accessToken string) (entity.User, error) {
@@ -62,6 +63,7 @@ func (Jwt) ValidateToken(accessToken string) (entity.User, error) {
 	payload, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		user.Email = payload["user_id"].(string)
+		user.Username = payload["user_username"].(string)
 
 		return user, nil
 	}
@@ -70,11 +72,14 @@ func (Jwt) ValidateToken(accessToken string) (entity.User, error) {
 }
 
 func (Jwt) ValidateRefreshToken(model serilizers.Token) (entity.User, error) {
-	sha1 := sha1.New()
-	io.WriteString(sha1, os.Getenv("SECRET_KEY"))
+	hash := sha1.New()
+	_, err := io.WriteString(hash, os.Getenv("SECRET_KEY"))
+	if err != nil {
+		return entity.User{}, err
+	}
 
 	user := entity.User{}
-	salt := string(sha1.Sum(nil))[0:16]
+	salt := string(hash.Sum(nil))[0:16]
 	block, err := aes.NewCipher([]byte(salt))
 	if err != nil {
 		return user, err
@@ -121,10 +126,13 @@ func (Jwt) ValidateRefreshToken(model serilizers.Token) (entity.User, error) {
 }
 
 func (Jwt) createRefreshToken(token serilizers.Token) (serilizers.Token, error) {
-	sha1 := sha1.New()
-	io.WriteString(sha1, os.Getenv("SECRET_KEY"))
+	hash := sha1.New()
+	_, err := io.WriteString(hash, os.Getenv("SECRET_KEY"))
+	if err != nil {
+		return serilizers.Token{}, err
+	}
 
-	salt := string(sha1.Sum(nil))[0:16]
+	salt := string(hash.Sum(nil))[0:16]
 	block, err := aes.NewCipher([]byte(salt))
 	if err != nil {
 		fmt.Println(err.Error())
