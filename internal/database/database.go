@@ -17,19 +17,9 @@ func New() *gorm.DB {
 		log.Fatal(err)
 	}
 
-	err = db.AutoMigrate(&entity.User{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Post{}, &entity.Comment{})
 	if err != nil {
-		panic("Failed : Unable to migrate your postgres database")
-	}
-
-	err = db.AutoMigrate(&entity.Post{})
-	if err != nil {
-		panic("Failed : Unable to migrate your postgres database")
-	}
-
-	err = db.AutoMigrate(&entity.Comment{})
-	if err != nil {
-		panic("Failed : Unable to migrate your postgres database")
+		panic("Failed : Unable to migrate your sqlite database")
 	}
 
 	return db
