@@ -17,28 +17,28 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.HandleMethodNotAllowed = true
 
-	users := r.Group("/profile", middleware.AthorizationJWT(jwt))
+	users := r.Group("/profile", middleware.Authorization(jwt))
 	{
-		users.GET("/:userId", s.getUserProfile)
-		users.GET("/:userId/followers", s.getUserFollowers)
-		users.DELETE("/:userId/followers/:follower_userId", s.UnfollowUser)
-		users.GET("/:userId/followings", s.getUserFollowings)
-		users.POST("/:userId/followings", s.FollowUser)
-		users.DELETE("/:userId/followings/:followingUserId", s.removeFromFollowers)
+		users.GET("/:username", s.getUserProfile)
+		users.GET("/:username/followers", s.getUserFollowers)
+		users.DELETE("/:username/followers/:follower_userId", s.UnfollowUser)
+		users.GET("/:username/followings", s.getUserFollowings)
+		users.POST("/:username/followings", s.FollowUser)
+		users.DELETE("/:username/followings/:followingUsername", s.removeFromFollowers)
 	}
 
-	auth := r.Group("/api/v1")
+	auth := r.Group("/api/v1") // DONE
 	{
-		auth.POST("/create", s.SignupUser)
-		auth.POST("/login", s.LoginUser)
+		auth.POST("/create", s.SignupUser) // DONE
+		auth.POST("/login", s.LoginUser)   // DONE
 	}
 
-	posts := r.Group("/posts", middleware.AthorizationJWT(jwt))
+	posts := r.Group("/posts", middleware.Authorization(jwt))
 	{
-		posts.GET("/:username", s.listUserPosts)
-		posts.GET("/:username/:postId", s.detailUserPosts)
-		posts.POST("/create-post", s.createUserPost)
-		posts.DELETE("/:postId", s.removeUserPost)
+		posts.GET("/:username", s.listUserPosts)           // DONE
+		posts.GET("/:username/:postId", s.detailUserPosts) // DONE
+		posts.POST("/create-post", s.createUserPost)       // DONE
+		posts.DELETE("/:postId", s.removeUserPost)         // DONE
 		posts.PUT("/update", s.updateUserPost)
 	}
 
