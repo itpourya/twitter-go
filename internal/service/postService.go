@@ -12,7 +12,7 @@ type PostService interface {
 	GetListPost(username string) ([]entity.Post, error)
 	GetDetailPost(username string, postID int) (entity.Post, error)
 	DeletePost(postID int, username string) error
-	UpdatePost(post entity.Post) error
+	UpdatePost(postDetail serilizers.UpdatePostRequest, username string) error
 }
 
 type postService struct {
@@ -63,9 +63,13 @@ func (p postService) DeletePost(postID int, username string) error {
 	return nil
 }
 
-func (p postService) UpdatePost(post entity.Post) error {
-	//TODO implement me
-	panic("implement me")
+func (p postService) UpdatePost(postDetail serilizers.UpdatePostRequest, username string) error {
+	err := p.postRepository.UpdatePost(postDetail, username)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func NewPostService(repo repository.PostRepository) PostService {
