@@ -82,9 +82,29 @@ func (s *Server) createUserPost(ctx *gin.Context) {
 }
 
 func (s *Server) updateUserPost(ctx *gin.Context) {
+	var updatePostRequest serilizers.UpdatePostRequest
+	username := ctx.Value("username")
+
+	err := ctx.ShouldBind(&updatePostRequest)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "enter valid post id or valid content",
+		})
+		return
+	}
+
+	err = postService.UpdatePost(updatePostRequest, username.(string))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "you don't have permission to update",
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": "update user post",
+		"message": "post updated",
 	})
+
 }
 
 func (s *Server) removeUserPost(ctx *gin.Context) {
