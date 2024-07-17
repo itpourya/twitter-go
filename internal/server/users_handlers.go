@@ -2,7 +2,6 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"net/http"
 	"twitter-go-api/internal/database"
 	"twitter-go-api/internal/entity"
@@ -13,9 +12,9 @@ import (
 )
 
 var (
-	DB             *gorm.DB                  = database.New()
-	authRepository repository.AuthRepository = repository.NewAuthRepository(DB)
-	authService    service.AuthService       = service.NewAuthService(authRepository)
+	DB             = database.New()
+	authRepository = repository.NewAuthRepository(DB)
+	authService    = service.NewAuthService(authRepository)
 )
 
 func (s *Server) getUserProfile(ctx *gin.Context) {
@@ -93,7 +92,7 @@ func (s *Server) LoginUser(ctx *gin.Context) {
 		return
 	}
 
-	_, err = authService.VerifyLogin(loginRequest.Email, loginRequest.Password)
+	_, err = authService.VerifyLogin(loginRequest.Username, loginRequest.Password)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -101,7 +100,10 @@ func (s *Server) LoginUser(ctx *gin.Context) {
 		return
 	}
 
-	user.Email = loginRequest.Email
+	userEmail, _ := authService.FindEmailService(loginRequest.Username)
+	user.Username = loginRequest.Username
+	user.Email = userEmail
+
 	jwt := jwt2.Jwt{}
 	token, _ := jwt.CreateToken(user)
 
