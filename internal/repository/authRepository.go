@@ -10,10 +10,22 @@ import (
 type AuthRepository interface {
 	AddUser(user entity.User) (string, error)
 	FindUserByEmail(email string) (entity.User, error)
+	FindUserByUsername(username string) (entity.User, error)
 }
 
 type authRepository struct {
 	session *gorm.DB
+}
+
+func (a *authRepository) FindUserByUsername(username string) (entity.User, error) {
+	var user entity.User
+
+	query := a.session.Where("username = ?", username).Take(&user)
+	if query.Error != nil {
+		log.Println("Username Doesn't exist")
+	}
+
+	return user, nil
 }
 
 func NewAuthRepository(session *gorm.DB) AuthRepository {
@@ -27,7 +39,7 @@ func (a *authRepository) FindUserByEmail(email string) (entity.User, error) {
 
 	query := a.session.Where("email == ?", email).Take(&user)
 	if query.Error != nil {
-		log.Println(query.Error)
+		log.Println("Email Doesn't exist")
 	}
 
 	return user, nil
