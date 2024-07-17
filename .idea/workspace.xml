@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/entity/postEntity.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/postRepository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/userRepository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/service/postService.go" afterDir="false" />
+    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="Add: add post delete api handler and fix some error in response">
+      <change afterPath="$PROJECT_DIR$/qodana.sarif.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/entity/userEntiry.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/entity/userEntity.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middleware/jwt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/serilizers/authSerializers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serilizers/authSerializers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/posts_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/posts_handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/server/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/authService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/authService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/users_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/users_handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service/postService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/postService.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +32,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/internal/database/database.go" root0="SKIP_INSPECTION" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -49,23 +46,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/pourya/Desktop/project/twitter-go&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/home/pourya/Desktop/project/twitter-go",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings"
   }
-}</component>
+}]]></component>
+  <component name="QodanaCIConfigService">
+    <option name="ciType" value="GITHUB" />
+    <option name="path" value="$PROJECT_DIR$/.github/workflows/qodana_code_quality.yml" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="/tmp/qodana_output1/qodana.sarif.json" reportGuid="a90f3b88-e962-449f-9b64-fbe31d8e5895" reportId="twitter-go/qodana/2024-07-17" />
+      <ReportDescription localRun="true" path="/tmp/qodana_output/qodana.sarif.json" reportGuid="ef260e71-612e-4945-b456-de332f71724f" reportId="twitter-go/qodana/2024-07-17" />
+    </option>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -77,6 +85,29 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add: add new function for get user by username" />
+    <MESSAGE value="Refactor: change serializer and now users can login with username and password" />
+    <MESSAGE value="Add: add FindEmailService for get email of users with username" />
+    <MESSAGE value="Refactor: refactor database.go and do migrate in one line" />
+    <MESSAGE value="Fix: fix some spelling mistakes" />
+    <MESSAGE value="Fix: get username from users token and fix some variable name" />
+    <MESSAGE value="Fix: change Post model for better json response" />
+    <MESSAGE value="Add: users can see another user posts and delete own posts" />
+    <MESSAGE value="Add: add post delete api handler and fix some error in response" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: add post delete api handler and fix some error in response" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
