@@ -11,11 +11,25 @@ import (
 
 type AuthService interface {
 	AddUserService(request serilizers.RegisterRequest) (string, error)
-	VerifyLogin(email string, password string) (string, error)
+	VerifyLogin(username string, password string) (string, error)
+	FindEmailService(username string) (string, error)
 }
 
 type authService struct {
 	authRepository repository.AuthRepository
+}
+
+func (a authService) FindEmailService(username string) (string, error) {
+	if username == "" {
+		return "", errors.New("username is empty")
+	}
+
+	Username, err := a.authRepository.FindUserByUsername(username)
+	if err != nil {
+		return "", err
+	}
+
+	return Username.Email, nil
 }
 
 func (a authService) AddUserService(request serilizers.RegisterRequest) (string, error) {
@@ -41,8 +55,8 @@ func (a authService) AddUserService(request serilizers.RegisterRequest) (string,
 	return status, nil
 }
 
-func (a authService) VerifyLogin(email string, password string) (string, error) {
-	userExists, _ := a.authRepository.FindUserByEmail(email)
+func (a authService) VerifyLogin(username string, password string) (string, error) {
+	userExists, _ := a.authRepository.FindUserByUsername(username)
 
 	if userExists.Email == "" {
 		return "", errors.New("email not found")
