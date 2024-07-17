@@ -6,7 +6,7 @@ import (
 	"twitter-go-api/internal/pkg/jwt"
 )
 
-func AthorizationJWT(jwtService jwt.TokenService) gin.HandlerFunc {
+func Authorization(jwtService jwt.TokenService) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		authToken := context.GetHeader("Authorization")
 		if authToken == "" {
@@ -20,7 +20,8 @@ func AthorizationJWT(jwtService jwt.TokenService) gin.HandlerFunc {
 			context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid token", "status": false})
 			return
 		}
-		context.Set("userEmail", user.Email)
+		//context.Set("userEmail", user.Email)
+		context.Set("username", user.Username)
 		return
 	}
 }
