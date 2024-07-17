@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="Add: add post delete api handler and fix some error in response">
-      <change afterPath="$PROJECT_DIR$/qodana.sarif.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="Add: add new serializer for get update detail for updating posts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serilizers/postSerializers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/entity/userEntity.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/entity/userEntity.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/server/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/users_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/users_handlers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/service/postService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/postService.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +88,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -107,7 +110,14 @@
     <MESSAGE value="Fix: change Post model for better json response" />
     <MESSAGE value="Add: users can see another user posts and delete own posts" />
     <MESSAGE value="Add: add post delete api handler and fix some error in response" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: add post delete api handler and fix some error in response" />
+    <MESSAGE value="Add: implement deletePost service in service layer" />
+    <MESSAGE value="Refactor: refactor and change logic od url parameters and add some comment" />
+    <MESSAGE value="Refactor: refactor and change jwt token logic and now users token have username and email of users" />
+    <MESSAGE value="Add: add and use qodana for first time :)" />
+    <MESSAGE value="Add: implement update in post repository layer and now users can update posts" />
+    <MESSAGE value="Add: implement update in api handler" />
+    <MESSAGE value="Add: add new serializer for get update detail for updating posts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: add new serializer for get update detail for updating posts" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
