@@ -20,8 +20,11 @@ func Authorization(jwtService jwt.TokenService) gin.HandlerFunc {
 			context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid token", "status": false})
 			return
 		}
-		//context.Set("userEmail", user.Email)
+
+		context.Set("user_email", user.Email)
+		context.Set("user_id", user.ID)
 		context.Set("username", user.Username)
+
 		return
 	}
 }

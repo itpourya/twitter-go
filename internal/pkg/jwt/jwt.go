@@ -30,8 +30,9 @@ func (j Jwt) CreateToken(user entity.User) (serilizers.Token, error) {
 	var err error
 
 	claims := jwt.MapClaims{}
-	claims["user_id"] = user.Email
+	claims["user_email"] = user.Email
 	claims["user_username"] = user.Username
+	claims["user_id"] = user.ID
 	claims["exp"] = time.Now().Add(time.Hour * 2).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -62,8 +63,9 @@ func (Jwt) ValidateToken(accessToken string) (entity.User, error) {
 
 	payload, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		user.Email = payload["user_id"].(string)
+		user.Email = payload["user_email"].(string)
 		user.Username = payload["user_username"].(string)
+		user.ID = int(payload["user_id"].(float64))
 
 		return user, nil
 	}
