@@ -19,11 +19,11 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	users := r.Group("/users", middleware.Authorization(jwt))
 	{
-		users.GET("/:username", s.getUserProfile) // DONE
-		users.GET("/show-followers/:userID", s.getUserFollowers)
+		users.GET("/:username", s.getUserProfile)                // DONE
+		users.GET("/show-followers/:userID", s.getUserFollowers) // DONE
 		users.DELETE("/unfollow/:userID", s.UnfollowUser)
-		users.GET("/show-followings/:userID", s.getUserFollowings)
-		users.GET("/follow/:user_id", s.FollowUser) // DONE
+		users.GET("/show-followings/:userID", s.getUserFollowings) // DONE
+		users.GET("/follow/:user_id", s.FollowUser)                // DONE
 		users.DELETE("/remove/:userID", s.removeFromFollowers)
 	}
 
@@ -33,7 +33,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 		auth.POST("/login", s.LoginUser)   // DONE
 	}
 
-	posts := r.Group("/posts", middleware.Authorization(jwt))
+	posts := r.Group("/posts", middleware.Authorization(jwt)) // DONE
 	{
 		posts.GET("/:username", s.listUserPosts)           // DONE
 		posts.GET("/:username/:postId", s.detailUserPosts) // DONE
