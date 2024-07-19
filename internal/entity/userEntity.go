@@ -15,18 +15,18 @@ type User struct {
 
 type Follower struct {
 	gorm.Model
-	ID             int  `gorm:"primary_key:auto_increment" json:"id"`
-	UserID         int  `gorm:"not null"`
-	FollowerUserID int  `gorm:"not null"`
-	User           User `gorm:"foreignKey:UserID"`
-	Follower       User `gorm:"foreignKey:FollowerUserID"`
+	ID             int  `gorm:"primary_key:auto_increment" json:"-"`
+	UserID         int  `gorm:"not null" json:"-"`
+	FollowerUserID int  `gorm:"not null" json:"user"`
+	User           User `gorm:"foreignKey:UserID" json:"-"`
+	Follower       User `gorm:"foreignKey:FollowerUserID" json:"-"`
 }
 
 type Following struct {
 	gorm.Model
-	ID              int  `gorm:"primary_key:auto_increment" json:"id"`
-	UserID          int  `gorm:"not null"`
+	ID              int  `gorm:"primary_key:auto_increment" json:"-"`
+	UserID          int  `gorm:"not null" json:"-"`
 	FollowingUserID int  `gorm:"not null"`
-	User            User `gorm:"foreignKey:UserID"`
-	Following       User `gorm:"foreignKey:FollowingUserID"`
+	User            User `gorm:"foreignKey:UserID" json:"-"`
+	Following       User `gorm:"foreignKey:FollowingUserID" json:"-"`
 }
