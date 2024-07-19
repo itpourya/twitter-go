@@ -3,8 +3,8 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"twitter-go-api/internal/database"
-	"twitter-go-api/internal/entity"
 	jwt2 "twitter-go-api/internal/pkg/jwt"
 	"twitter-go-api/internal/repository"
 	"twitter-go-api/internal/serilizers"
@@ -15,11 +15,37 @@ var (
 	DB             = database.New()
 	authRepository = repository.NewAuthRepository(DB)
 	authService    = service.NewAuthService(authRepository)
+	userRepository = repository.NewUserRepository(DB)
+	userService    = service.NewUserService(userRepository)
 )
 
 func (s *Server) getUserProfile(ctx *gin.Context) {
+	username := ctx.Param("username")
+
+	profile, countDetail, err := userService.GetProfile(username)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "user not found",
+		})
+		return
+	}
+
+	if profile.IsActive == false {
+		ctx.JSON(http.StatusOK, gin.H{
+			"message": "Account is disable or not found",
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": "user profile",
+		"firstname":  profile.Firstname,
+		"lastname":   profile.Lastname,
+		"username":   profile.Username,
+		"email":      profile.Email,
+		"IsActive":   profile.IsActive,
+		"Posts":      countDetail["postsCount"],
+		"Followers":  countDetail["followerCount"],
+		"Followings": countDetail["followingCount"],
 	})
 }
 
@@ -30,9 +56,15 @@ func (s *Server) deleteUserProfile(ctx *gin.Context) {
 }
 
 func (s *Server) getUserFollowers(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"data": "get user profile",
-	})
+	userID := ctx.Param("userID")
+	convert, _ := strconv.Atoi(userID)
+
+	follower, err := userService.GetUserFollower(convert)
+	if err != nil {
+		return
+	}
+
+	ctx.JSON(http.StatusOK, follower)
 }
 
 func (s *Server) removeFromFollowers(ctx *gin.Context) {
@@ -48,8 +80,20 @@ func (s *Server) getUserFollowings(ctx *gin.Context) {
 }
 
 func (s *Server) FollowUser(ctx *gin.Context) {
+	user := ctx.Param("user_id")
+	userID, _ := strconv.Atoi(user)
+	followerID := ctx.Value("user_id")
+
+	err := userService.FollowUser(followerID.(int), userID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "can not follow",
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": "follow user",
+		"message": "followed",
 	})
 }
 
@@ -86,23 +130,19 @@ func (s *Server) SignupUser(ctx *gin.Context) {
 
 func (s *Server) LoginUser(ctx *gin.Context) {
 	var loginRequest serilizers.LoginRequest
-	var user entity.User
+
 	err := ctx.ShouldBind(&loginRequest)
 	if err != nil {
 		return
 	}
 
-	_, err = authService.VerifyLogin(loginRequest.Username, loginRequest.Password)
+	user, err := authService.VerifyLogin(loginRequest.Username, loginRequest.Password)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
-
-	userEmail, _ := authService.FindEmailService(loginRequest.Username)
-	user.Username = loginRequest.Username
-	user.Email = userEmail
 
 	jwt := jwt2.Jwt{}
 	token, _ := jwt.CreateToken(user)
