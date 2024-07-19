@@ -17,7 +17,7 @@ func New() *gorm.DB {
 		log.Fatal(err)
 	}
 
-	err = db.AutoMigrate(&entity.User{}, &entity.Post{}, &entity.Comment{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Post{}, &entity.Comment{}, &entity.Follower{}, &entity.Following{})
 	if err != nil {
 		panic("Failed : Unable to migrate your sqlite database")
 	}
