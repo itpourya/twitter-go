@@ -74,9 +74,15 @@ func (s *Server) removeFromFollowers(ctx *gin.Context) {
 }
 
 func (s *Server) getUserFollowings(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"data": "user followings",
-	})
+	userID := ctx.Param("userID")
+	convert, _ := strconv.Atoi(userID)
+
+	followings, err := userService.GetUserFollowing(convert)
+	if err != nil {
+		return
+	}
+
+	ctx.JSON(http.StatusOK, followings)
 }
 
 func (s *Server) FollowUser(ctx *gin.Context) {

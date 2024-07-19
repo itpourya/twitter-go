@@ -2,7 +2,6 @@ package repository
 
 import (
 	"errors"
-	"fmt"
 	"gorm.io/gorm"
 	"twitter-go-api/internal/entity"
 )
@@ -11,7 +10,7 @@ type UserRepository interface {
 	FindById(userID int) (entity.User, error)
 	GetFollowers(userID int) ([]entity.Follower, error)
 	Unfollow(userID int, followerUserID int) error
-	GetFollowings(userID int) ([]entity.User, error)
+	GetFollowings(userID int) ([]entity.Following, error)
 	Follow(followerUserID int, userID int) error
 	RemoveFollowing(userID int) error
 	GetProfile(username string) (entity.User, map[string]int64, error)
@@ -63,12 +62,10 @@ func (u userRepository) FindById(userID int) (entity.User, error) {
 func (u userRepository) GetFollowers(userID int) ([]entity.Follower, error) {
 	var follower []entity.Follower
 
-	query := u.session.Model("Follower").Where("user_id", userID).Find(&follower)
+	query := u.session.Model(&follower).Preload("Follower").Where("user_id = ?", userID).Find(&follower)
 	if query.Error != nil {
 		return nil, errors.New("users have not follower")
 	}
-
-	fmt.Println(follower)
 
 	return follower, nil
 }
@@ -78,13 +75,20 @@ func (u userRepository) Unfollow(userID int, followerUserID int) error {
 	panic("implement me")
 }
 
-func (u userRepository) GetFollowings(userID int) ([]entity.User, error) {
-	//TODO implement me
-	panic("implement me")
+func (u userRepository) GetFollowings(userID int) ([]entity.Following, error) {
+	var following []entity.Following
+
+	query := u.session.Model(&following).Preload("Following").Where("following_user_id = ?", userID).Find(&following)
+	if query.Error != nil {
+		return nil, errors.New("users have not follower")
+	}
+
+	return following, nil
 }
 
 func (u userRepository) Follow(followerUserID int, userID int) error {
 	var follower entity.Follower
+	var following entity.Following
 
 	check := !u.checkUserFollowings(userID, followerUserID)
 	if check == false {
@@ -94,7 +98,11 @@ func (u userRepository) Follow(followerUserID int, userID int) error {
 	follower.FollowerUserID = followerUserID
 	follower.UserID = userID
 
+	following.FollowingUserID = userID
+	following.UserID = followerUserID
+
 	u.session.Create(&follower)
+	u.session.Create(&following)
 	return nil
 }
 
