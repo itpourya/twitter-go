@@ -17,14 +17,14 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.HandleMethodNotAllowed = true
 
-	users := r.Group("/profile", middleware.Authorization(jwt))
+	users := r.Group("/users", middleware.Authorization(jwt))
 	{
-		users.GET("/:username", s.getUserProfile)
-		users.GET("/:username/followers", s.getUserFollowers)
-		users.DELETE("/:username/followers/:follower_userId", s.UnfollowUser)
-		users.GET("/:username/followings", s.getUserFollowings)
-		users.POST("/:username/followings", s.FollowUser)
-		users.DELETE("/:username/followings/:followingUsername", s.removeFromFollowers)
+		users.GET("/:username", s.getUserProfile) // DONE
+		users.GET("/show-followers/:userID", s.getUserFollowers)
+		users.DELETE("/unfollow/:userID", s.UnfollowUser)
+		users.GET("/show-followings/:userID", s.getUserFollowings)
+		users.GET("/follow/:user_id", s.FollowUser) // DONE
+		users.DELETE("/remove/:userID", s.removeFromFollowers)
 	}
 
 	auth := r.Group("/api/v1") // DONE
