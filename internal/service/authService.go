@@ -11,7 +11,7 @@ import (
 
 type AuthService interface {
 	AddUserService(request serilizers.RegisterRequest) (string, error)
-	VerifyLogin(username string, password string) (string, error)
+	VerifyLogin(username string, password string) (entity.User, error)
 	FindEmailService(username string) (string, error)
 }
 
@@ -55,18 +55,18 @@ func (a authService) AddUserService(request serilizers.RegisterRequest) (string,
 	return status, nil
 }
 
-func (a authService) VerifyLogin(username string, password string) (string, error) {
+func (a authService) VerifyLogin(username string, password string) (entity.User, error) {
 	userExists, _ := a.authRepository.FindUserByUsername(username)
 
 	if userExists.Email == "" {
-		return "", errors.New("email not found")
+		return entity.User{}, errors.New("email not found")
 	}
 
 	isValidPassword := comparePasswords(userExists.Password, []byte(password))
 	if !isValidPassword {
-		return "", errors.New("failed to login, because password is not matched")
+		return entity.User{}, errors.New("failed to login, because password is not matched")
 	}
-	return "Ok", nil
+	return userExists, nil
 }
 
 func NewAuthService(repo repository.AuthRepository) AuthService {
