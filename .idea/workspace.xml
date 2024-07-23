@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="Add: now user can follow another users and see followers in profile">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/entity/userEntity.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/entity/userEntity.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/userRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/userRepository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server/users_handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/users_handlers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/userService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/userService.go" afterDir="false" />
-    </list>
+    <list default="true" id="bf84e4b4-15cd-4dca-aacd-b7615393864d" name="Changes" comment="Add: now users can see followings" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,8 +90,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor: change serializer and now users can login with username and password" />
-    <MESSAGE value="Add: add FindEmailService for get email of users with username" />
     <MESSAGE value="Refactor: refactor database.go and do migrate in one line" />
     <MESSAGE value="Fix: fix some spelling mistakes" />
     <MESSAGE value="Fix: get username from users token and fix some variable name" />
@@ -113,7 +104,6 @@
     <MESSAGE value="Add: implement update in api handler" />
     <MESSAGE value="Add: add new serializer for get update detail for updating posts" />
     <MESSAGE value="Add: implement updateService in post service layer" />
-    <MESSAGE value="add some comment" />
     <MESSAGE value="Fix: fix database entity for better json response" />
     <MESSAGE value="Refactor: do some refactor for better token generate" />
     <MESSAGE value="Add: add new models to migration for follower and following" />
@@ -122,7 +112,10 @@
     <MESSAGE value="Refactor: change routes" />
     <MESSAGE value="Refactor: change user model and add follower and following model" />
     <MESSAGE value="Add: now user can follow another users and see followers in profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: now user can follow another users and see followers in profile" />
+    <MESSAGE value="add some comment" />
+    <MESSAGE value="Refactor: change entity tag foe better json response" />
+    <MESSAGE value="Add: now users can see followings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: now users can see followings" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
